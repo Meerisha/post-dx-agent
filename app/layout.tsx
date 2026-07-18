@@ -1,6 +1,7 @@
 import type { Metadata } from "next";
 import { Inter } from "next/font/google";
 import "./globals.css";
+import { RunProvider } from "./run-context";
 
 /**
  * Inter through next/font rather than a <link> to fonts.googleapis.com —
@@ -26,7 +27,11 @@ export default function RootLayout({
 }>) {
   return (
     <html lang="en" className={`${inter.variable} h-full antialiased`}>
-      <body className="min-h-full bg-canvas text-ink">{children}</body>
+      {/* RunProvider lives above the router so a run survives navigation
+          between /, /clinician, and /parent without re-fetching. */}
+      <body className="min-h-full bg-canvas text-ink">
+        <RunProvider>{children}</RunProvider>
+      </body>
     </html>
   );
 }
