@@ -1,0 +1,259 @@
+{
+  "resourceType": "Bundle",
+  "id": "post-dx-demo-001",
+  "type": "collection",
+  "timestamp": "2026-07-15T14:30:00Z",
+  "entry": [
+    {
+      "fullUrl": "urn:uuid:patient-001",
+      "resource": {
+        "resourceType": "Patient",
+        "id": "patient-001",
+        "name": [{ "use": "official", "given": ["Mateo"], "family": "Alvarez" }],
+        "gender": "male",
+        "birthDate": "2023-02-14",
+        "address": [
+          {
+            "use": "home",
+            "line": ["4417 N Kedzie Ave"],
+            "city": "Chicago",
+            "state": "IL",
+            "postalCode": "60625",
+            "country": "US"
+          }
+        ],
+        "communication": [
+          {
+            "language": {
+              "coding": [
+                { "system": "urn:ietf:bcp:47", "code": "es", "display": "Spanish" }
+              ]
+            },
+            "preferred": true
+          }
+        ]
+      }
+    },
+    {
+      "fullUrl": "urn:uuid:practitioner-001",
+      "resource": {
+        "resourceType": "Practitioner",
+        "id": "practitioner-001",
+        "name": [
+          {
+            "use": "official",
+            "given": ["James"],
+            "family": "Weedon",
+            "prefix": ["Dr."],
+            "suffix": ["MD"]
+          }
+        ],
+        "qualification": [
+          {
+            "code": {
+              "coding": [
+                {
+                  "system": "http://nucc.org/provider-taxonomy",
+                  "code": "2080P0006X",
+                  "display": "Developmental - Behavioral Pediatrics"
+                }
+              ],
+              "text": "Developmental-Behavioral Pediatrics"
+            }
+          }
+        ]
+      }
+    },
+    {
+      "fullUrl": "urn:uuid:encounter-001",
+      "resource": {
+        "resourceType": "Encounter",
+        "id": "encounter-001",
+        "status": "finished",
+        "class": {
+          "system": "http://terminology.hl7.org/CodeSystem/v3-ActCode",
+          "code": "AMB",
+          "display": "ambulatory"
+        },
+        "type": [
+          {
+            "coding": [
+              {
+                "system": "http://snomed.info/sct",
+                "code": "390906007",
+                "display": "Follow-up encounter"
+              }
+            ],
+            "text": "Developmental evaluation — diagnostic feedback visit"
+          }
+        ],
+        "subject": { "reference": "urn:uuid:patient-001", "display": "Mateo Alvarez" },
+        "participant": [
+          {
+            "individual": {
+              "reference": "urn:uuid:practitioner-001",
+              "display": "Dr. James Weedon, MD"
+            }
+          }
+        ],
+        "period": { "start": "2026-07-15T14:30:00Z", "end": "2026-07-15T15:45:00Z" }
+      }
+    },
+    {
+      "fullUrl": "urn:uuid:condition-001",
+      "resource": {
+        "resourceType": "Condition",
+        "id": "condition-001",
+        "clinicalStatus": {
+          "coding": [
+            {
+              "system": "http://terminology.hl7.org/CodeSystem/condition-clinical",
+              "code": "active"
+            }
+          ]
+        },
+        "verificationStatus": {
+          "coding": [
+            {
+              "system": "http://terminology.hl7.org/CodeSystem/condition-ver-status",
+              "code": "confirmed"
+            }
+          ]
+        },
+        "code": {
+          "coding": [
+            {
+              "system": "http://hl7.org/fhir/sid/icd-10-cm",
+              "code": "F84.0",
+              "display": "Autistic disorder"
+            }
+          ],
+          "text": "Autism Spectrum Disorder"
+        },
+        "subject": { "reference": "urn:uuid:patient-001" },
+        "encounter": { "reference": "urn:uuid:encounter-001" },
+        "onsetDateTime": "2025-09-01",
+        "recordedDate": "2026-07-15",
+        "recorder": { "reference": "urn:uuid:practitioner-001" }
+      }
+    },
+    {
+      "fullUrl": "urn:uuid:observation-cars2",
+      "resource": {
+        "resourceType": "Observation",
+        "id": "observation-cars2",
+        "status": "final",
+        "category": [
+          {
+            "coding": [
+              {
+                "system": "http://terminology.hl7.org/CodeSystem/observation-category",
+                "code": "survey",
+                "display": "Survey"
+              }
+            ]
+          }
+        ],
+        "code": {
+          "coding": [
+            {
+              "system": "http://loinc.org",
+              "code": "89204-2",
+              "display": "Childhood Autism Rating Scale, Second Edition (CARS-2) total score"
+            }
+          ],
+          "text": "CARS-2 Standard Version — Total Raw Score"
+        },
+        "subject": { "reference": "urn:uuid:patient-001" },
+        "encounter": { "reference": "urn:uuid:encounter-001" },
+        "effectiveDateTime": "2026-07-15",
+        "performer": [{ "reference": "urn:uuid:practitioner-001" }],
+        "valueQuantity": { "value": 35.5, "unit": "score", "system": "http://unitsofmeasure.org" },
+        "interpretation": [
+          {
+            "coding": [
+              {
+                "system": "http://terminology.hl7.org/CodeSystem/v3-ObservationInterpretation",
+                "code": "A",
+                "display": "Abnormal"
+              }
+            ],
+            "text": "Mild-to-moderate range of autism spectrum symptomatology"
+          }
+        ]
+      }
+    },
+    {
+      "fullUrl": "urn:uuid:observation-vineland",
+      "resource": {
+        "resourceType": "Observation",
+        "id": "observation-vineland",
+        "status": "final",
+        "category": [
+          {
+            "coding": [
+              {
+                "system": "http://terminology.hl7.org/CodeSystem/observation-category",
+                "code": "survey",
+                "display": "Survey"
+              }
+            ]
+          }
+        ],
+        "code": {
+          "coding": [
+            {
+              "system": "http://loinc.org",
+              "code": "89206-7",
+              "display": "Vineland Adaptive Behavior Scales composite score"
+            }
+          ],
+          "text": "Vineland-3 Adaptive Behavior Composite"
+        },
+        "subject": { "reference": "urn:uuid:patient-001" },
+        "encounter": { "reference": "urn:uuid:encounter-001" },
+        "effectiveDateTime": "2026-07-10",
+        "valueQuantity": { "value": 68, "unit": "standard score" },
+        "interpretation": [
+          {
+            "coding": [
+              {
+                "system": "http://terminology.hl7.org/CodeSystem/v3-ObservationInterpretation",
+                "code": "L",
+                "display": "Low"
+              }
+            ],
+            "text": "Moderately low adaptive functioning"
+          }
+        ]
+      }
+    },
+    {
+      "fullUrl": "urn:uuid:coverage-001",
+      "resource": {
+        "resourceType": "Coverage",
+        "id": "coverage-001",
+        "status": "active",
+        "type": {
+          "coding": [
+            {
+              "system": "http://terminology.hl7.org/CodeSystem/v3-ActCode",
+              "code": "MCAID",
+              "display": "Medicaid"
+            }
+          ],
+          "text": "Illinois Medicaid — HealthChoice Illinois"
+        },
+        "subscriberId": "IL-MCD-4471902",
+        "beneficiary": { "reference": "urn:uuid:patient-001" },
+        "payor": [{ "display": "Illinois Department of Healthcare and Family Services" }],
+        "period": { "start": "2026-01-01", "end": "2026-12-31" }
+      }
+    }
+  ],
+  "_demoNotes": {
+    "synthetic": true,
+    "intentionalGap": "No audiology / hearing evaluation resource is present. ASD service authorization in Illinois typically requires documented hearing screening to rule out hearing loss as a contributor to speech-language delay. The Gap Detection Agent should surface this.",
+    "expectedPathway": "Child turned 3 on 2023-02-14 + 3y = 2026-02-14, so as of the 2026-07-15 encounter the child is 3y5m — past the Part C ceiling, so IDEA Part B (school-based) applies."
+  }
+}
