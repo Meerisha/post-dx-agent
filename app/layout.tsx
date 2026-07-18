@@ -1,20 +1,22 @@
 import type { Metadata } from "next";
-import { Geist, Geist_Mono } from "next/font/google";
+import { Inter } from "next/font/google";
 import "./globals.css";
 
-const geistSans = Geist({
-  variable: "--font-geist-sans",
+/**
+ * Inter through next/font rather than a <link> to fonts.googleapis.com —
+ * next/font self-hosts the file at build time, so there is no third-party
+ * request, no layout shift on first paint, and the demo still renders
+ * correctly on a conference network that cannot reach Google.
+ */
+const inter = Inter({
+  variable: "--font-inter",
   subsets: ["latin"],
-});
-
-const geistMono = Geist_Mono({
-  variable: "--font-geist-mono",
-  subsets: ["latin"],
+  display: "swap",
 });
 
 export const metadata: Metadata = {
-  title: "post-dx-agent",
-  description: "Ambient clinical encounters with FHIR context",
+  title: "PostDx — Autonomous Care Coordination",
+  description: "FHIR R4 in, clinician and family care-coordination packages out.",
 };
 
 export default function RootLayout({
@@ -23,11 +25,8 @@ export default function RootLayout({
   children: React.ReactNode;
 }>) {
   return (
-    <html
-      lang="en"
-      className={`${geistSans.variable} ${geistMono.variable} h-full antialiased`}
-    >
-      <body className="min-h-full flex flex-col">{children}</body>
+    <html lang="en" className={`${inter.variable} h-full antialiased`}>
+      <body className="min-h-full bg-canvas text-ink">{children}</body>
     </html>
   );
 }

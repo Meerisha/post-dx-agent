@@ -1,10 +1,20 @@
 import Anthropic from "@anthropic-ai/sdk";
 
 /**
- * Model is pinned rather than read from env so a demo can't silently drift
+ * Models are pinned rather than read from env so a demo can't silently drift
  * onto a different tier mid-presentation.
+ *
+ * FAST handles the mechanical agents (extraction, rule application, listing);
+ * QUALITY is reserved for the two outputs a human actually reads closely —
+ * the payer letter and the parent brief.
  */
 export const MODEL = "claude-sonnet-4-6";
+export const FAST_MODEL = "claude-haiku-4-5-20251001";
+
+/** Haiku 4.5 rejects `output_config.effort` — Opus/Sonnet tiers only. */
+function supportsEffort(model: string): boolean {
+  return !model.startsWith("claude-haiku");
+}
 
 let cached: Anthropic | null = null;
 
@@ -23,6 +33,7 @@ type CompleteOptions = {
   prompt: string;
   maxTokens?: number;
   effort?: "low" | "medium" | "high";
+  model?: string;
 };
 
 /** Single-shot text completion. Used for letters and structured extraction. */
@@ -31,12 +42,13 @@ export async function completeText({
   prompt,
   maxTokens = 4000,
   effort = "medium",
+  model = MODEL,
 }: CompleteOptions): Promise<string> {
   const response = await getClient().messages.create({
-    model: MODEL,
+    model,
     max_tokens: maxTokens,
     system,
-    output_config: { effort },
+    ...(supportsEffort(model) ? { output_config: { effort } } : {}),
     messages: [{ role: "user", content: prompt }],
   });
 
@@ -82,14 +94,14 @@ export async function completeJson<T>(options: CompleteOptions): Promise<T> {
 
 /** Streams a completion, invoking `onText` for each delta. */
 export async function streamText(
-  { system, prompt, maxTokens = 4000, effort = "medium" }: CompleteOptions,
+  { system, prompt, maxTokens = 4000, effort = "medium", model = MODEL }: CompleteOptions,
   onText: (text: string) => void,
 ): Promise<string> {
   const stream = getClient().messages.stream({
-    model: MODEL,
+    model,
     max_tokens: maxTokens,
     system,
-    output_config: { effort },
+    ...(supportsEffort(model) ? { output_config: { effort } } : {}),
     messages: [{ role: "user", content: prompt }],
   });
 

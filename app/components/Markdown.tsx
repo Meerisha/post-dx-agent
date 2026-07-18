@@ -20,7 +20,17 @@ function inline(text: string, keyPrefix: string) {
   });
 }
 
-export function Markdown({ text, accent }: { text: string; accent: string }) {
+export function Markdown({
+  text,
+  accent,
+  bullet = "dot",
+}: {
+  text: string;
+  accent: string;
+  /** "check" renders each item as a tickable circle — used for the family plan,
+   *  where the list is a set of tasks rather than prose. */
+  bullet?: "dot" | "check";
+}) {
   const lines = text.split("\n");
   const blocks: React.ReactNode[] = [];
   let list: string[] = [];
@@ -28,10 +38,14 @@ export function Markdown({ text, accent }: { text: string; accent: string }) {
   const flushList = (key: string) => {
     if (list.length === 0) return;
     blocks.push(
-      <ul key={key} className="my-2 flex flex-col gap-1.5 pl-1">
+      <ul key={key} className={`my-2 flex flex-col pl-1 ${bullet === "check" ? "gap-2.5" : "gap-1.5"}`}>
         {list.map((item, i) => (
           <li key={i} className="flex gap-2.5 text-[13px] leading-relaxed">
-            <span className={`mt-[7px] h-1 w-1 shrink-0 rounded-full ${accent}`} />
+            {bullet === "check" ? (
+              <span className="mt-[3px] flex h-4 w-4 shrink-0 items-center justify-center rounded-full border-[1.5px] border-success/40" />
+            ) : (
+              <span className={`mt-[7px] h-1 w-1 shrink-0 rounded-full ${accent}`} />
+            )}
             <span>{inline(item, `${key}-${i}`)}</span>
           </li>
         ))}
