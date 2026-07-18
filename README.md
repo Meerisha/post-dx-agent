@@ -1,7 +1,52 @@
 # Post-Diagnosis Autonomous Agent
 
 **Built at the Abridge × Anthropic × Lightspeed Hackathon, July 18 2026. Meerim Samakova** 
-A developmental diagnosis is the start of the work, not the end of it. 47 days. I waited  for my son's first therapy appointment after his ASD diagnosis. 47 days of not knowing what to do.  Not because the therapists weren't there. Not because I didn't want it. Because nobody handled what came next. Every year, hundreds of thousands of families of neurodivergent children — autism, developmental delay, cerebral palsy, rare disease — leave the clinic with a diagnosis and a maze in front of them. An early intervention referral. A prior authorization. A school district notification. A therapy waitlist. Each with its own form, its own deadline, and its own way of quietly failing if nobody follows through. That follow-through falls on a clinician with three minutes before their next patient. Or a parent sitting alone with a 12-page report they cannot decode. PostDx fixes that. It takes a FHIR R4 Bundle from the diagnosing encounter and runs six agents over it — producing both halves of what has to happen next: The clinician package — prior authorization request, four referral letters ready to sign, documentation gap report with time impact per missing item. The family action plan — plain-English 7-day guide written for a parent.
+A developmental diagnosis triggers an administrative 
+cascade that healthcare has never automated.
+
+47 days. I waited  for my son's first therapy appointment 
+after his ASD diagnosis. Not because the care didn't 
+exist. Because the referrals, prior authorizations, 
+and documentation gaps weren't handled until weeks 
+after we left the clinic.
+
+PostDx is a six-agent pipeline that reads a FHIR R4 
+Bundle from the diagnosing encounter and autonomously 
+executes every clinical and administrative action 
+required in the 72 hours after diagnosis.
+
+Architecture:
+
+Agent 1 — FHIR Parser: extracts patient age, ICD-10 
+diagnosis code, insurance coverage, state, assessment 
+scores (CARS-2, ADOS-2), and diagnosing practitioner 
+from the Bundle resources.
+
+Agent 2 — Pathway Determination: age arithmetic is 
+computed in code, not by the model — models drift on 
+date math, and this number determines the entire care 
+pathway. Under 36 months → IDEA Part C Early 
+Intervention. Over 36 months → IDEA Part B school 
+services. The model fills in state-specific agencies 
+and timelines around a gate it does not open.
+
+Agents 3, 4, 5 — run concurrently via Promise.all:
+- Prior Authorization: drafts the payer request using 
+  ICD-10 codes and assessment scores as clinical 
+  justification, mapped to coverage type
+- Parallel Referrals: four letters simultaneously — 
+  early intervention, developmental pediatrician, 
+  ABA therapy, school district notification
+- Gap Detection: identifies missing documentation 
+  that would delay care or trigger a denial, with 
+  estimated time impact per gap
+
+Agent 6 — Dual Output: opens two streams simultaneously:
+- Clinician package: formal letters ready to review 
+  and sign, structured for each recipient
+- Family action plan: plain-English 7-day guide 
+  translated from clinical language — written for 
+  a parents.
 
 ---
 
