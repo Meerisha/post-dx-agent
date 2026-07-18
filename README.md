@@ -1,16 +1,7 @@
 # Post-Diagnosis Autonomous Agent
 
-**Built at the Abridge × Anthropic × Lightspeed Hackathon, July 18 2026. New project built in one day.**
-
-A developmental diagnosis is the start of the work, not the end of it. The
-family leaves with a code on a page and a maze in front of them: an early
-intervention referral, a prior authorization, a school district notification, a
-therapy waitlist — each with its own form, its own deadline, and its own way of
-quietly failing.
-
-This takes a FHIR Bundle from the diagnosing encounter and runs six agents over
-it to produce both halves of what has to happen next: the formal packet a
-clinician signs, and a plain-English plan a parent can actually follow.
+**Built at the Abridge × Anthropic × Lightspeed Hackathon, July 18 2026. Meerim Samakova** 
+A developmental diagnosis is the start of the work, not the end of it. 47 days. I waited  for my son's first therapy appointment after his ASD diagnosis. 47 days of not knowing what to do.  Not because the therapists weren't there. Not because I didn't want it. Because nobody handled what came next. Every year, hundreds of thousands of families of neurodivergent children — autism, developmental delay, cerebral palsy, rare disease — leave the clinic with a diagnosis and a maze in front of them. An early intervention referral. A prior authorization. A school district notification. A therapy waitlist. Each with its own form, its own deadline, and its own way of quietly failing if nobody follows through. That follow-through falls on a clinician with three minutes before their next patient. Or a parent sitting alone with a 12-page report they cannot decode. PostDx fixes that. It takes a FHIR R4 Bundle from the diagnosing encounter and runs six agents over it — producing both halves of what has to happen next: The clinician package — prior authorization request, four referral letters ready to sign, documentation gap report with time impact per missing item. The family action plan — plain-English 7-day guide written for a parent.
 
 ---
 
