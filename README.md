@@ -234,23 +234,6 @@ The FHIR interface is the same. The agent pipeline is the same. The output struc
 16:00  README + submission
 ```
 
-One person. One day. Six agents. Three waves.
-
----
-
-## Hackathon compliance
-
-| Requirement | Status |
-|-------------|--------|
-| New work built July 18 2026 | ✅ |
-| Public repository | ✅ |
-| Solo submission | ✅ |
-| Uses Abridge FHIR dataset | ✅ |
-| Agentic — not a chatbot, not basic RAG, not a dashboard | ✅ |
-| Real clinical workflow — prior auth, IDEA pathways, referrals | ✅ |
-| Live demo ready | ✅ |
-| Under 60 second runtime | ✅ |
-
 ---
 
 ## Connection to CogniQA
