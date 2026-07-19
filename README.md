@@ -2,7 +2,7 @@
 
 > The agent that activates the moment a diagnosis is confirmed.
 
-**Abridge × Anthropic × Lightspeed Hackathon · July 18 2026 · Solo · New work built in one day**
+**Abridge × Anthropic × Lightspeed Hackathon · July 18 2026 · Meerim Samakova**
 
 ---
 
